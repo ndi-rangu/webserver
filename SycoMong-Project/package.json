@@ -1,0 +1,20 @@
+{
+  "name": "sycomong-project",
+  "version": "1.0.0",
+  "description": "This is a test learning server created when learning Mongodb/mongoose, Express, React and Nodejs (MERN)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "Brian Ndirangu",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.0.1",
+    "path-to-regexp": "^6.2.1"
+  }
+}
