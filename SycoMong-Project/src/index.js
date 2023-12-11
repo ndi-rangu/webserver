@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
+//creating the models in the mongodb
 const Conductor = require('./models/conductor');
 const Driver = require('./models/driver');
 const Login = require('./models/userLogin');
@@ -24,10 +25,12 @@ require('./db/mongoose');
 
 // creating routes
 const registerRoute = require('./routes/userRegisterRouter');
+const loginRoute = require('./routes/loginRouter');
 
 
 //route use
 app.use("/Register", registerRoute);
+app.use("/Login", loginRoute);
 
 
 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // creating the fields inside the model(Schema)
 // Validators check if users entered their names without using any number
@@ -54,7 +55,7 @@ const registerSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
+        required: true,        
         unique: true,
     },
     contact: {
@@ -98,13 +99,30 @@ const registerSchema = new mongoose.Schema({
 }, {discriminatorKey:'position'});
 
 //validation of passwords and confirmpassword
-registerSchema.pre('validate',(next) =>{
-    if(this.password !== this.confirmPassword){
-        this.invalidate('confirmPassword', 'Passwords do not match');
-    }
-    next();
-})
+registerSchema.pre('save', async function (next) {
+     if(!this.isModified('password')) {
+         return next();
+     }
+    try {
 
+         //Ensure password and confirmed password are the same
+         if (this.confirmPassword !==  this.password) {
+            console.log("Password and confirmPassword do not match");
+            throw new Error("Password and confirmPassword do not match");
+        } else {
+            console.log("Password and confirmPassword match")
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(this.password, salt);
+        this.password = hashedPassword;
+        this.confirmPassword = this.password;     
+
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
 //creating the model(Table)
 const Registered = mongoose.model('Registered accounts', registerSchema);
 

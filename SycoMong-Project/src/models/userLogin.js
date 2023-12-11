@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 //creating the schemas of the model
 const loginSchema = new mongoose.Schema({
     email: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         required: true,
     },    
     password: {
-        type:mongoose.SchemaTypes.ObjectId,
+        type: String,
         required: true,
     },
 });
