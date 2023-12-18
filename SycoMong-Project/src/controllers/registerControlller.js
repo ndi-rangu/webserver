@@ -52,7 +52,7 @@ const registerController = {
     //third function is to get data by id only
     getById: async (req,res) =>{
         try {
-            const id = req.params.id
+            const id = req.params.id;
         Registered.findById(id)
         .then ((registered) =>{
             console.log(registered);
@@ -104,6 +104,49 @@ const registerController = {
         } catch (error){
             console.log(error);
             res.status(500).json({ message: "No matching records found"});
+        }
+    },
+
+    //updating data in the register thats saved by a specified user.
+    update: async (req,res) =>{
+        try{
+            const id = req.params.id;
+            const updatedRegistered = req.body;
+            await Registered.findOneAndUpdate({_id:id}, updatedRegistered, {new:true})
+            .then((updatedRegistered) =>{
+                console.log(updatedRegistered);
+                res.status(200).json({message: "Registered account has been updates successfully",updatedRegistered:updatedRegistered});
+
+            })
+            .catch((error) =>{
+                console.log(error);
+                res.status(400).json({message: "Failed to update registered account"})
+            }) 
+
+
+        } catch(error){
+            console.log(error);
+            res.status(500).json({ message: "Something went wrong with updating the registered account!"})
+        }
+    },
+
+    //deleting data already registered/exists
+    delete: async (req,res) =>{
+        try{
+            const id = req.params.id;
+            //const deleteRegistered = req.body;
+            await Registered.deleteOne({_id:id})
+            .then(()=>{
+                console.log();
+                res.status(200).json({message: "Registered account has been successfully deleted"})
+            })
+            .catch((error) =>{
+                console.log(error);
+                res.status(400).json({message: "Failed to delete the registered account"})
+            })
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message: "Cannot delete the Registered account.Something went wrong"})
         }
     }
 };
