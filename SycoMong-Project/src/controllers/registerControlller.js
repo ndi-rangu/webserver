@@ -133,12 +133,11 @@ const registerController = {
     //deleting data already registered/exists
     delete: async (req,res) =>{
         try{
-            const id = req.params.id;
-            //const deleteRegistered = req.body;
+            const id = req.params.id;            
             await Registered.deleteOne({_id:id})
-            .then(()=>{
-                console.log();
-                res.status(200).json({message: "Registered account has been successfully deleted"})
+            .then((deleteRegistered)=>{
+                console.log(deleteRegistered);
+                res.status(200).json({message: "Registered account has been successfully deleted", registered: deleteRegistered});
             })
             .catch((error) =>{
                 console.log(error);

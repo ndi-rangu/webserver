@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const body_parser = require('body-parser');
 
 //creating the models in the mongodb
 const Conductor = require('./models/conductor');
@@ -10,15 +11,17 @@ const Registered = require('./models/userRegister');
 
 const app = express();
 
+
 //server name
-var corOptions ={
-    origin: 'https://localhost:4000'
-}
+ var corOptions ={
+     origin: 'https://localhost:4000'
+ }
 
 //middlewares
-app.use(cors(corOptions));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
+app.use(body_parser.json());
 
 //db connection
 require('./db/mongoose');
@@ -37,7 +40,7 @@ app.use("/Login", loginRoute);
 //PORT
 const PORT = process.env.PORT || 4000
 
-app.listen(PORT, (req,res) =>{    
+app.listen(PORT, "192.168.1.65",() =>{    
     console.log(`Server is running on port ${PORT}`);
 });
 

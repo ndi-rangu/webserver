@@ -98,7 +98,7 @@ const registerSchema = new mongoose.Schema({
     },
 }, {discriminatorKey:'position'});
 
-//validation of passwords and confirmpassword
+//encryption and validation of passwords and confirmpassword
 registerSchema.pre('save', async function (next) {
      if(!this.isModified('password')) {
          return next();
@@ -112,7 +112,8 @@ registerSchema.pre('save', async function (next) {
         } else {
             console.log("Password and confirmPassword match")
         }
-
+        
+        //encryption 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(this.password, salt);
         this.password = hashedPassword;
