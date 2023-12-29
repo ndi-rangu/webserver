@@ -72,8 +72,14 @@ const registerSchema = new mongoose.Schema({
     },
     position:{   
         type: String,     
-        required: true,    
-        enum:['Driver', 'Conductor'],   
+        required: true,
+        validate:{
+            validator:function(value){
+                const lowercaseValue = value.toLowerCase();
+                return ['driver','conductor'].includes(lowercaseValue);
+            },
+            message: props => `${props.value} is not a valid enum value for path ${props.path}.`,
+        },             
     },
     password: {
         type: String,

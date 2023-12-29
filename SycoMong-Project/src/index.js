@@ -5,7 +5,6 @@ const body_parser = require('body-parser');
 //creating the models in the mongodb
 const Conductor = require('./models/conductor');
 const Driver = require('./models/driver');
-const Login = require('./models/userLogin');
 const Registered = require('./models/userRegister');
 
 
@@ -38,10 +37,10 @@ app.use("/Login", loginRoute);
 
 
 //PORT
-const PORT = process.env.PORT || 4000
+const port = process.env.PORT || 4000
 
-app.listen(PORT, "192.168.1.65",() =>{    
-    console.log(`Server is running on port ${PORT}`);
+app.listen(port, "0.0.0.0",() =>{    
+    console.log(`Server is running on port http://localhost:${port}`);
 });
 
 

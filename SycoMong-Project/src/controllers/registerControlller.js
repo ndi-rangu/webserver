@@ -11,13 +11,13 @@ const registerController = {
             await newRegister.save()
             .then((savedRegister)=>{
                 console.log(savedRegister);
-                res.status(200).json ({message: "Register saved successfully"});
+                res.status(200).json ({status: true, message: "Register saved successfully"});
             }) 
             .catch((error) =>{
                 console.log(error);
                 //prevent users from creating duplicate accounts using the same email.
                 if (error.code === 11000 && error.keyPattern && error.keyPattern.email){
-                    res.status(400).json({messgae: "Email already exists! Register with an unregistered email"})
+                    res.status(400).json({message: "Email already exists! Register with an unregistered email"})
                 }
                 else if (error.message.includes('Password and confirmPassword do not match'))  {
                     return res.status(400).json({ message: "Password and confirmPassword do not match"});
