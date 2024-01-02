@@ -7,14 +7,23 @@ const registerController = {
     // first is create
     create: async (req,res) =>{
         try{
-            const newRegister = new Registered(req.body);
+            const newRegister = new Registered(req.body);            
             await newRegister.save()
             .then((savedRegister)=>{
                 console.log(savedRegister);
-                res.status(200).json ({status: true, message: "Register saved successfully"});
+                res.status(200).json ({status: "SUCCESS", message: "Register saved successfully"});
             }) 
             .catch((error) =>{
                 console.log(error);
+                if(newRegister == ""){
+                    res.status(400).json({ message: "Empty input fields"})
+                }
+                else if (!/^[a-zA-Z ]*$/.test(firstName,middleName,surname)){
+                    res.status(400).json({ message: "Invalid name format entered"})
+                }
+                else if( /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)){
+                    res.status(400).json({ message: "Invalid email format entered"})
+                }
                 //prevent users from creating duplicate accounts using the same email.
                 if (error.code === 11000 && error.keyPattern && error.keyPattern.email){
                     res.status(400).json({message: "Email already exists! Register with an unregistered email"})
@@ -147,7 +156,7 @@ const registerController = {
             console.log(error);
             res.status(500).json({message: "Cannot delete the Registered account.Something went wrong"})
         }
-    }
+    }    
 };
 
 module.exports = registerController;

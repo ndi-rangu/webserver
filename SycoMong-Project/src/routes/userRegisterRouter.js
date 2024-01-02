@@ -1,7 +1,7 @@
 // Register route
 const express = require('express');
 const router = express.Router();
-const registerController = require('../controllers/registerControlller');
+const registerController = require('../controllers/registerController');
 
 router.post("/", registerController.create);
 router.get("/",registerController.getAll);

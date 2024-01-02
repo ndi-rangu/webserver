@@ -121,9 +121,11 @@ registerSchema.pre('save', async function (next) {
         
         //encryption 
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(this.password, salt);
+        const hashedPassword = await bcrypt.hash(this.password, salt);        
         this.password = hashedPassword;
-        this.confirmPassword = this.password;     
+        this.confirmPassword = this.password;  
+        
+    
 
         next();
     } catch (error) {

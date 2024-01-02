@@ -8,8 +8,6 @@ const logger = require('morgan');
 
 
 //creating the models in the mongodb
-const Conductor = require('./src/models/conductor');
-const Driver = require('./src/models/driver');
 const Registered = require('./src/models/userRegister');
 
 
@@ -37,12 +35,13 @@ require('./src/db/mongoose');
 // creating routes
 const registerRoute = require('./src/routes/userRegisterRouter');
 const loginRoute = require('./src/routes/loginRouter');
+const resetPasswordRoute = require('./src/routes/passwordResetRouer');
 
 
 //route use
 app.use("/Register", registerRoute);
 app.use("/Login", loginRoute);
-
+app.use("/ResetPassword",resetPasswordRoute);
 
 
 //PORT
