@@ -8,7 +8,13 @@ const logger = require('morgan');
 
 
 //creating the models in the mongodb
-const Registered = require('./src/models/userRegister');
+// const Registered = require('./src/models/userRegister');
+// const fare = require('./src/models/userFareCollection');
+// const vehicle = require('./src/models/companyVehicles');
+const { userRegister, userFareCollection, companyVehicles } = require('./src/models/finalModel');
+
+// Now you can use userRegister, userFareCollection, and companyVehicles in your code
+
 
 
 const app = express();
@@ -22,8 +28,8 @@ const app = express();
 //middlewares
 app.use(logger('dev'));
 app.use(cors());
-app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 app.use(body_parser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname,'public_flutter')));
@@ -36,12 +42,18 @@ require('./src/db/mongoose');
 const registerRoute = require('./src/routes/userRegisterRouter');
 const loginRoute = require('./src/routes/loginRouter');
 const resetPasswordRoute = require('./src/routes/passwordResetRouer');
+const fareRoute = require('./src/routes/fareRouter');
+const vehicleRoute = require('./src/routes/vehicleRouter');
 
 
 //route use
+app.use('/Dashboard', express.static(path.join(__dirname, 'public-flutter')));
+
 app.use("/Register", registerRoute);
 app.use("/Login", loginRoute);
 app.use("/ResetPassword",resetPasswordRoute);
+app.use("/Conductor/Fare",fareRoute);
+app.use("/Driver/Vehicle",vehicleRoute);
 
 
 //PORT
@@ -53,10 +65,10 @@ app.listen(port, "0.0.0.0",() =>{
 
 
 
-app.get('/', (req,res) =>{   
-    res.sendFile(path.join(__dirname,'public-flutter/index.html')); 
-    //res.status(200).json();
-});
+// app.get('/Dashboard', (req,res) =>{   
+//     res.sendFile(path.join(__dirname,'public-flutter/index.html')); 
+//     //res.status(200).json();
+// });
 
 app.get('/Driver', (req,res) =>{    
     res.status(200).json('Should navigate to driver page');
@@ -70,6 +82,10 @@ app.get('/Driver', (req,res) =>{
     //  })     
      res.status(200).json('Should show frontend of Conductor page');
  });
+
+ app.get('/Conductor/Fare', fareRoute ,(req,res) =>{
+    res.status(200).json({message:"good"})
+ })
 
 //  //saving conductor in the database
 //  run()
