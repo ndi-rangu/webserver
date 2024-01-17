@@ -5,15 +5,15 @@ const resetEmailController = {
 
     getById: async (req,res) =>{
         try {
-            const id = req.params.id;
-        Registered.findById(id)
+            const { email } = req.body;
+        Register.findOne({ email })
         .then ((registered) =>{
-            console.log(registered);
+            console.log('Email request for changing password: ',registered);
             res.status(200).json({registered: registered})
         })
         .catch((error) =>{
             console.log(error);
-            res.status(400).json({message: `We cannot find any registered accounts with search query ${id}`})
+            res.status(400).json({message: `We cannot find any registered accounts with search query ${email}`})
         })
         } catch (error) {
             console.log(error);

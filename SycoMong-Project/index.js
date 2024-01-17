@@ -11,7 +11,7 @@ const logger = require('morgan');
 // const Registered = require('./src/models/userRegister');
 // const fare = require('./src/models/userFareCollection');
 // const vehicle = require('./src/models/companyVehicles');
-const { userRegister, userFareCollection, companyVehicles } = require('./src/models/finalModel');
+const { userRegister, userFareCollection, companyVehicles, userProfile } = require('./src/models/finalModel');
 
 // Now you can use userRegister, userFareCollection, and companyVehicles in your code
 
@@ -44,16 +44,18 @@ const loginRoute = require('./src/routes/loginRouter');
 const resetPasswordRoute = require('./src/routes/passwordResetRouer');
 const fareRoute = require('./src/routes/fareRouter');
 const vehicleRoute = require('./src/routes/vehicleRouter');
+const profileRoute = require('./src/routes/profile');
 
 
 //route use
-app.use('/Dashboard', express.static(path.join(__dirname, 'public-flutter')));
+//app.use('/Dashboard', express.static(path.join(__dirname, 'public-flutter')));
 
 app.use("/Register", registerRoute);
 app.use("/Login", loginRoute);
 app.use("/ResetPassword",resetPasswordRoute);
 app.use("/Conductor/Fare",fareRoute);
 app.use("/Driver/Vehicle",vehicleRoute);
+app.use("/Profile",profileRoute);
 
 
 //PORT
