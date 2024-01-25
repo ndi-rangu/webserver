@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const Register = require('../models/userRegister');
+const Registered = require('../models/userRegister');
 
 const resetPasswordController = {
     //Update users password
