@@ -1,25 +1,30 @@
-const fare = require('../models/userFareCollection');
+const Fare = require('../models/userFareCollection');
+const Registered = require('../models/userRegister');
+
 
 //functionality of the controller
 
 const fareController = {
     create: async (req,res) =>{
         try{
-            const newFare = new fare(req.body);
-            await newFare.save()
-            .catch((error) => {
-                console.log(error);
-                if(newFare == ""){
-                    res.status(400).json({ message: "Cannot have empty fields"})
-                }
-            })
-            .then((savedFare) =>{
-                console.log(savedFare);
-                res.status(200).json({ message: "Fare has been saved", savedFare})
-            })
+            const newFare = req.body.fare;
+
+            if(!newFare === ""){                
+                return res.status(400).json({ message: "Fare amount cannot be empty"})
+            }
+
+            const newFareAmount = new Fare({ fare: newFare,});
+
+            //saving the fare inserted in the body
+            const savedFare = await newFareAmount.save();
+
+            //await savedFare.populate('user', ['firstName', 'surname', 'idNumber']);      
+            console.log(savedFare);
+            return res.status(200).json({ message: "Fare has been saved", savedFare})
+            
         }catch(error){
             console.log(error);
-            res.status(500).json({message: "Something went wrong"});
+            return res.status(500).json({message: "Something went wrong"});
         }
     }
 };

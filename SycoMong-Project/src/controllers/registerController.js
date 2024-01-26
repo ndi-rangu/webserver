@@ -45,7 +45,8 @@ const registerController = {
             }     
             const payload = {
                 user:{
-                    id: newRegister._id
+                    id: newRegister._id,
+                    position: newRegister.position
                 }
             }
             const token = jwt.sign(
@@ -57,7 +58,7 @@ const registerController = {
             await newRegister.save()            
             .then((savedRegister)=>{            
             //Register user successful
-            console.log(savedRegister);
+            console.log(payload, savedRegister);
             res.status(200).json ({status: "SUCCESS", token , message: "Register saved successfully", user: savedRegister});
                 
         })                

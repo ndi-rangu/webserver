@@ -15,7 +15,7 @@ const profileController = {
 
             if(!userProfile){
                 console.log('No such user found');
-                return res.status(404).json({ message: "No user found"});
+                return res.status(400).json({ message: "No user found"});
             } else{
                 return res.status(200).json({ message: "Authorization successful", userProfile})
             }

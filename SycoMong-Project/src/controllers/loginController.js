@@ -24,8 +24,8 @@ const loginController = {
       console.log('Email:', userEmail);
       const user = await Registered.findOne({email: userEmail});   
       if (!user) {
-        console.log(userEmail + 'Email does not exist');
-        return res.status(404).json({ message: 'Email does not exist! Please Register' });
+        console.log(userEmail + ' Email does not exist');
+        return res.status(404).json({ message: 'Incorrect Email or password.' });
         
       }  
 
@@ -34,13 +34,21 @@ const loginController = {
       
        if (!isValidPassword){
         console.log('Invalid password');
-        return res.status(401).json({ message: 'Incorrect password. Please try again.' });
+        return res.status(401).json({ message: 'Incorrect Email or password.' });
       }else {
+
+        const payload = {
+          user:{
+              id: user._id,
+              position: user.position,
+              
+          }
+      }
         // Generate JWT token if user login is successful
         const token = jwt.sign(
-          { userEmail: user.email, userId: user._id },
-          "secretKey", // replace with your own secret keydirangu2010
-          { expiresIn: '1hr' } //  token expiration time
+          payload,
+          "secretKey", 
+          { expiresIn: 36000 } //change token expiration later
         );
                 
         // Login successful

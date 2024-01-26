@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
-const fareCollectionSchema = new mongoose.Schema ({
-    userName: {
-        type: String,
 
-    },
+const fareCollectionSchema = new mongoose.Schema ({
     fare: {
         type: Number,
+        required: true,
     },
     dateSubmitted: {
         type: Date,
