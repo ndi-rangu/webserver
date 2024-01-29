@@ -40,6 +40,9 @@ const loginController = {
         const payload = {
           user:{
               id: user._id,
+              firstName: user.firstName,
+              surname: user.surname,
+              idNumber: user.idNumber,
               position: user.position,
               
           }

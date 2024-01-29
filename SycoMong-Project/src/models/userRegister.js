@@ -133,6 +133,6 @@ registerSchema.pre('save', async function (next) {
     }
 });
 //creating the model(Table)
-const Registered = mongoose.model('Registered accounts', registerSchema);
+const Registered = mongoose.model('Accounts', registerSchema);
 
 module.exports = Registered;

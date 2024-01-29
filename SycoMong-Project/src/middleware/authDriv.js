@@ -20,7 +20,7 @@ module.exports = function(req,res,next){
             return res.status(401).json({ message: "YOU DO NOT HAVE THE RIGHTS TO ACCESS THIS PAGE"});
         }
 
-        req.user = decoded.user; //queried from the payload in the registered controller
+        req.user = decoded.user; //queried from the payload in the login controller
         next();
     } catch(error){
         //invalid token key
