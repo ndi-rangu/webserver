@@ -5,28 +5,35 @@ const Registered = require('../models/userRegister');
 const vehicleController = {
     create: async (req,res) =>{
         try{
-            const { id } = req.params;
-
-            const assignedUser = await Registered.findOne({ _id: id});
-
-            if (!assignedUser || assignedUser.position !== 'driver') {
-                return res.status(400).json({ message: "Vehicles can only be assigned to drivers" });
-              }
-
-
-            // capturing and saving the data
+        
+            // capturing the data sent to the body
             const { numberPlate, model, capacity, status } = req.body;
+            
+            if (numberPlate === "" || model === "" || capacity === "" || status === "") {
+                return res.status(400).json({ message: "Cannot have empty fields" });
+            }
+            
+            const assignedUser = await Registered.findById(req.user.id, ['firstName', 'surname', 'idNumber']);
+            if (!assignedUser) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
             const newVehicle = new vehicle({
                 numberPlate,
                 model,
                 capacity,
                 status,
-                assignedTo: assignedUser._id
-            });
+                assignedTo: {
+                     _id: assignedUser._id,
+                    firstName: assignedUser.firstName,
+                    surname: assignedUser.surname,
+                     idNumber: assignedUser.idNumber
+                 }
+            }); 
 
             const savedVehicle = await newVehicle.save();            
             console.log(savedVehicle);
-            res.status(200).json({ message: "Vehicle data saved", savedVehicle: savedVehicle, assignedTo: assignedUser});
+            return res.status(200).json({ message: "Vehicle data saved", savedVehicle, assignedUser});
             
         } catch(error){
             console.log(error);

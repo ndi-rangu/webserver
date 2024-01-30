@@ -1,39 +1,45 @@
 const mongoose = require('mongoose');
-const Registered = require('../models/userRegister');
+
 
 const vehicleSchema = new mongoose.Schema({
     numberPlate:{
         type: String,
+        required: true
 
     },
     model:{
-        type: String
+        type: String,
+        required: true
     },
     capacity:{
         type: Number,
+        required: true
     },
     status: {
         type: String,
+        required: true
     },
     assignedTo: {
+        _id: {
         type: mongoose.Schema.Types.ObjectId, 
-        refPath: 'positionRef',
-        
-    },
-    positionRef:{
-        type: String,
-        default: 'Registered account'
+        ref: 'Accounts',
+        required: true
+        },
+        firstName:{
+            type: String,
+            required: true
+        },
+        surname: {
+            type: String,
+            required: true
+        },
+        idNumber:{
+            type: Number,
+            required: true
+        },
     }
 });
 
-vehicleSchema.pre('save', async function(next) {
-    if (!this.assignedTo) {
-        // Logic to find the default driver or conductor ID based on position
-        const defaultDriverId = await Registered.findOne({ position: 'driver' });
-        this.assignedTo = defaultDriverId; // Set the default driver ID
-    }
-    next();
-});
 
 const vehicle = mongoose.model("Company vehicle", vehicleSchema);
 

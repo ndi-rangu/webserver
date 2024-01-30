@@ -3,6 +3,6 @@ const router = express.Router();
 const vehicleController = require('../controllers/vehicleController');
 const auth2 = require('../middleware/authDriv');
 
-router.post("/:id", auth2, vehicleController.create);
+router.post("/", auth2, vehicleController.create);
 
 module.exports = router;

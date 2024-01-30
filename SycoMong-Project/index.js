@@ -87,6 +87,10 @@ app.get('/Driver', (req,res) =>{
 
  app.get('/Conductor/Fare', fareRoute ,(req,res) =>{
     res.status(200).json({message:"good"})
+ });
+
+ app.get('/Driver/Vehicle', fareRoute ,(req,res) =>{
+    res.status(200).json({message:"good"})
  })
 
 //  //saving conductor in the database

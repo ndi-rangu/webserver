@@ -7,7 +7,8 @@ const Registered = require('../models/userRegister');
 const fareController = {
     create: async (req,res) =>{
         try{
-
+            
+            //capturing the data sent to the body
             const newFare = req.body.fare;
 
             if( newFare === ""){

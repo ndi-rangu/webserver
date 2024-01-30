@@ -24,7 +24,7 @@ const registerController = {
     
             const newRegister = new Registered({firstName,middleName,surname,age,gender,email,contact,idNumber,position,password,confirmPassword}); 
             try{
-                if(newRegister == ""){
+                if(newRegister === ""){
                  return res.status(400).json({ message: "Empty input fields"})
              }
              else if (!/^[a-zA-Z ]*$/.test(newRegister.firstName, newRegister.middleName,newRegister.surname)){
