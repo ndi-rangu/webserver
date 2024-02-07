@@ -42,24 +42,12 @@ const registerController = {
             } catch(error){
                 console.log(error);
                 res.status(500).json({message: "There is a problem with your registration data. Please check and try again"})
-            }     
-            // const payload = {
-            //     user:{
-            //         id: newRegister._id,
-            //         position: newRegister.position
-            //     }
-            // }
-            // const token = jwt.sign(
-            //     payload,    
-            //     "secretKey",
-            //     { expiresIn: 3600000 } //change token expiration later
-            // );
-
+            }
             await newRegister.save()            
             .then((savedRegister)=>{            
             //Register user successful
             console.log(savedRegister); //payload
-            res.status(200).json ({status: "SUCCESS" , message: "Register saved successfully", user: savedRegister}); //token
+            res.status(200).json ({status:true , message: "Register saved successfully", user: savedRegister}); //token
                 
         })                
             .catch((error) =>{

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Registered = require('../models/userRegister');
-const profileController = require('./profileController');
+
 
 const loginController = {
 
@@ -9,13 +9,16 @@ const loginController = {
   // function login is a post(create)
   login: async (req, res) => {
     try {
-      const userEmail = req.body.email.toLowerCase();
+      const userEmail = req.body.email;
       const password = req.body.password;
       
-      
+      if (!userEmail) {
+        console.log('Email is missing in the request body');
+        return res.status(400).json({ message: 'Email is required.' });
+      }
 
       //prevent empty credentials to log in
-      if( userEmail === "" && password === ""){
+      if(!userEmail && !password ){
         res.status(400).json({ mesasge: "Provide credentials to log in!!"})
       }
       else {
@@ -42,8 +45,13 @@ const loginController = {
               id: user._id,
               firstName: user.firstName,
               surname: user.surname,
+              age: user.age,
+              gender: user.gender,
+              email: user.email,
+              contact: user.contact,
               idNumber: user.idNumber,
-              position: user.position,
+              position: user.position,             
+              password: user.password
               
           }
       }
@@ -56,7 +64,7 @@ const loginController = {
                 
         // Login successful
         console.log(`Email: ${userEmail} has successfully logged in to the server!`)     
-        return res.status(200).json({ status: true, message: 'Login successful', token });
+        return res.status(200).json({status:true, message: 'Login successful', token });
       }
     } 
     } catch (error) {
