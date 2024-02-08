@@ -24,7 +24,7 @@ const registerController = {
     
             const newRegister = new Registered({firstName,middleName,surname,age,gender,email,contact,idNumber,position,password,confirmPassword}); 
             try{
-                if(newRegister === ""){
+                if(Object.values(newRegister).some(field => field === "")){
                  return res.status(400).json({ message: "Empty input fields"})
              }
              else if (!/^[a-zA-Z ]*$/.test(newRegister.firstName, newRegister.middleName,newRegister.surname)){
@@ -36,9 +36,18 @@ const registerController = {
             else if (!/^[a-zA-Z ]*$/.test(newRegister.surname)){
                 return res.status(400).json({ message: "Invalid surname entered"})
             }
+            else if(newRegister.age <18){
+                return res.status(400).json({message:"Please be of legal age to register"})
+            }else if(newRegister.age >60){
+                return res.status(400).json({message:"You are not allowed to register as you have reached the past the age of work"})
+            }else if(!['male', 'female'].includes(newRegister.gender.toLowerCase())){
+                return res.status(400).json({message: "Invalid gender entered"})
+             }
              else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(newRegister.email)){
                 return res.status(400).json({ message: "Invalid email entered"})
-             } 
+             } else if(!['driver', 'conductor'].includes(newRegister.position.toLowerCase())){
+                return res.status(400).json({message: "Invalid position entered"})
+            } 
             } catch(error){
                 console.log(error);
                 res.status(500).json({message: "There is a problem with your registration data. Please check and try again"})

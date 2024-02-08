@@ -52,6 +52,13 @@ const registerSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: true,
+        validate:{
+            validator:function(value){
+                const lowercaseValue = value.toLowerCase();
+                return ['male','female'].includes(lowercaseValue);
+            },
+            message: props => `${props.value} is not a valid enum value for path ${props.path}.`,
+        },  
     },
     email: {
         type: String,
