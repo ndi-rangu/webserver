@@ -36,7 +36,7 @@ const registerController = {
             else if (!/^[a-zA-Z ]*$/.test(newRegister.surname)){
                 return res.status(400).json({ message: "Invalid surname entered"})
             }
-            else if(newRegister.age <18){
+            else if(newRegister.age >1 && newRegister.age<18){
                 return res.status(400).json({message:"Please be of legal age to register"})
             }else if(newRegister.age >60){
                 return res.status(400).json({message:"You are not allowed to register as you have reached the past the age of work"})

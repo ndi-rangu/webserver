@@ -40,10 +40,10 @@ const loginController = {
         return res.status(401).json({ message: 'Incorrect Email or password.' });
       }else {
 
-        const payload = {
-          user:{
+        const payload = {          
               id: user._id,
               firstName: user.firstName,
+              middleName: user.middleName,
               surname: user.surname,
               age: user.age,
               gender: user.gender,
@@ -51,9 +51,7 @@ const loginController = {
               contact: user.contact,
               idNumber: user.idNumber,
               position: user.position,             
-              password: user.password
-              
-          }
+              password: user.password            
       }
         // Generate JWT token if user login is successful
         const token = jwt.sign(
